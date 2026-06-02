@@ -3,5 +3,10 @@ import java.util.Scanner;
 public class CF4A {
     public static void main(String[] args) {
         try (Scanner sc = new Scanner(System.in)) {
-    }}
+            int n = sc.nextInt();
+            sc.nextLine();
+            for (int i = 0; i < n; i++) {
+            }
+        }
+        }
 }
