@@ -9,9 +9,8 @@ public class CF1800C1 {
             long[] armies = new long[n];
             for (int i = 0; i < n; i++) {
                 Deque<Long> bonus_deck = new ArrayDeque<>();
-                int k = Integer.parseInt(sc.next());
                 long army_strength = 0;
-                for (int a = 0; a < k; a++) {
+                for (int a = Integer.parseInt(sc.next()); a > 0; a--) {
                     long power = Long.parseLong(sc.next());
                     if (power == 0) {
                         if (bonus_deck.isEmpty()) {
