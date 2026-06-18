@@ -1,3 +1,5 @@
+package ashish.btech.dsa.cf;
+
 import java.util.Scanner;
 
 public class CF71A {
