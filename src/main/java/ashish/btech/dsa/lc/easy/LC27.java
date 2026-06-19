@@ -5,16 +5,19 @@ public class LC27 {
     public int removeElement(int[] nums, int val) {
         if (nums.length < 1) return 0;
         int k = 0;
-        for (int a = nums.length - 1; a > 0 && k != a; a--) {
+        int a = nums.length - 1;
+        while (k <= a) {
             if (nums[k] != val) {
                 k++;
-                a++;
+                continue;
             } else if (nums[a] != val) {
                 nums[k] = nums[a];
                 nums[a] = val;
+                k++;
             }
+            a--;
         }
-        return k + (nums[k] != val ? 1 : 0);
+        return k;
     }
 
     public void run() {
