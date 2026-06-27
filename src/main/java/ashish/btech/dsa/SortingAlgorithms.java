@@ -30,9 +30,9 @@ public class SortingAlgorithms {
 
     public static int[] bubbleSort(int[] nums) {
         boolean swapped = false;
-        do {
+        for (int reversePointer = nums.length; reversePointer > 0; reversePointer--) {
             swapped = false;
-            for (int a = 0; a < nums.length - 1; a++) {
+            for (int a = 0; a < reversePointer - 1; a++) {
                 if (nums[a] > nums[a + 1]) {
                     int temp = nums[a];
                     nums[a] = nums[a + 1];
@@ -40,7 +40,8 @@ public class SortingAlgorithms {
                     swapped = true;
                 }
             }
-        } while (swapped);
+            if (!swapped) break;
+        }
         return nums;
     }
 
@@ -54,31 +55,31 @@ public class SortingAlgorithms {
     }
 
     private static void merge(int[] nums, int left, int right, int mid) {
-        int[] left_arr = new int[mid - left + 1];
-        int[] right_arr = new int[right - mid];
+        int[] leftArr = new int[mid - left + 1];
+        int[] rightArr = new int[right - mid];
 
-        System.arraycopy(nums, left, left_arr, 0, mid - left + 1);
-        System.arraycopy(nums, mid + 1, right_arr, 0, right - mid);
+        System.arraycopy(nums, left, leftArr, 0, mid - left + 1);
+        System.arraycopy(nums, mid + 1, rightArr, 0, right - mid);
 
         int i = 0, j = 0, k = left;
-        while (i < left_arr.length && j < right_arr.length) {
-            if (left_arr[i] <= right_arr[j]) {
-                nums[k] = left_arr[i];
+        while (i < leftArr.length && j < rightArr.length) {
+            if (leftArr[i] <= rightArr[j]) {
+                nums[k] = leftArr[i];
                 i++;
             } else {
-                nums[k] = right_arr[j];
+                nums[k] = rightArr[j];
                 j++;
             }
             k++;
         }
 
-        while (i < left_arr.length) {
-            nums[k] = left_arr[i];
+        while (i < leftArr.length) {
+            nums[k] = leftArr[i];
             i++;
             k++;
         }
-        while (j < right_arr.length) {
-            nums[k] = right_arr[j];
+        while (j < rightArr.length) {
+            nums[k] = rightArr[j];
             j++;
             k++;
         }
@@ -116,39 +117,65 @@ public class SortingAlgorithms {
                 max = num;
             }
         }
-        int[] counting_arr = new int[max + 1];
+        int[] countingArr = new int[max + 1];
         for (int num : nums) {
-            counting_arr[num]++;
+            countingArr[num]++;
         }
-        for (int index = 1; index < counting_arr.length; index++) {
-            counting_arr[index] += counting_arr[index - 1];
+        for (int index = 1; index < countingArr.length; index++) {
+            countingArr[index] += countingArr[index - 1];
         }
-        int[] counting_sorted_arr = new int[nums.length];
+        int[] countingSortedArr = new int[nums.length];
         for (int reversePointer = nums.length - 1; reversePointer >= 0; reversePointer--) {
-            counting_sorted_arr[counting_arr[nums[reversePointer]] - 1] = nums[reversePointer];
-            counting_arr[nums[reversePointer]]--;
+            countingSortedArr[countingArr[nums[reversePointer]] - 1] = nums[reversePointer];
+            countingArr[nums[reversePointer]]--;
         }
-        return counting_sorted_arr;
+        return countingSortedArr;
+    }
+
+    public static void bubbleDown(int[] nums, int index, int limitIndex) {
+
+        if (((limitIndex > index * 2 + 2 && nums[index * 2 + 1] > nums[index * 2 + 2]) || limitIndex > index * 2 + 1)
+                && nums[index] < nums[index * 2 + 1]) {
+            int temp = nums[index];
+            nums[index] = nums[index * 2 + 1];
+            nums[index * 2 + 1] = temp;
+            bubbleDown(nums, index * 2 + 1, limitIndex);
+        }
+        if (limitIndex > index * 2 + 2 && nums[index] < nums[index * 2 + 2]) {
+            int temp = nums[index];
+            nums[index] = nums[index * 2 + 2];
+            nums[index * 2 + 2] = temp;
+            index = index * 2 + 2;
+            bubbleDown(nums, index, limitIndex);
+        }
     }
 
     public static void heapSort(int[] nums) {
         for (int reversePointer = nums.length - 1; reversePointer > 0; reversePointer--) {
-            for (int heapifier = reversePointer; heapifier > 0; heapifier--) {
-                if (nums[(heapifier - 1) / 2] < nums[heapifier]) {
-                    int temp = nums[heapifier];
-                    nums[heapifier] = nums[(heapifier - 1) / 2];
-                    nums[(heapifier - 1) / 2] = temp;
+            if (reversePointer == nums.length - 1) {
+
+                for (int heapifier = reversePointer; heapifier > 0; heapifier--) {
+                    if (nums[(heapifier - 1) / 2] < nums[heapifier]) {
+                        int temp = nums[heapifier];
+                        nums[heapifier] = nums[(heapifier - 1) / 2];
+                        nums[(heapifier - 1) / 2] = temp;
+                    }
                 }
+                int temp = nums[reversePointer];
+                nums[reversePointer] = nums[0];
+                nums[0] = temp;
+            } else {
+                bubbleDown(nums, 0, reversePointer + 1);
+                int temp = nums[reversePointer];
+                nums[reversePointer] = nums[0];
+                nums[0] = temp;
             }
-            int temp = nums[reversePointer];
-            nums[reversePointer] = nums[0];
-            nums[0] = temp;
         }
     }
 
     public static void main(String[] args) {
         int[] array = new int[] {6, 3, 9, 3, 8, 3, 8, 2};
-        heapSort(array);
+        bubbleSort(array);
         for (int a : array) {
             System.out.print(a + " ");
         }
