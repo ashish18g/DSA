@@ -6,36 +6,32 @@ import java.util.List;
 
 public class LC18 {
     public static List<List<Integer>> fourSum(int[] nums, int target) {
-        Arrays.sort(nums);
-        List<List<Integer>> quadruplets = new ArrayList<>();
         int n = nums.length;
-        for (int a = 0; a < n - 3; a++) {
-            if (a > 0 && nums[a] == nums[a - 1]) continue;
-            for (int b = a + 1; b < n - 2; b++) {
-                if (b > a + 1 && nums[b] == nums[b - 1]) continue;
-                for (int c = b + 1; c < n - 1; c++) {
-                    if (c > b + 1 && nums[c] == nums[c - 1]) continue;
-                    for (int d = c + 1; d < n; d++) {
-                        if (d > c + 1 && nums[d] == nums[d - 1]) continue;
-                        if (nums[a] + nums[b] + nums[c] + nums[d] == target) {
-                            List<Integer> quadruplet = new ArrayList<Integer>();
-                            quadruplet.add(nums[a]);
-                            quadruplet.add(nums[b]);
-                            quadruplet.add(nums[c]);
-                            quadruplet.add(nums[d]);
-
-                            quadruplets.add(quadruplet);
-                            n = d + 1;
-                            break;
-                        }
-                    }
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < n - 3; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            for (int j = i + 1; j < n - 2; j++) {
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int l = j + 1;
+                int r = n - 1;
+                while (l < r) {
+                    long sum = (long) nums[i] + nums[j] + nums[l] + nums[r];
+                    if (sum == target) {
+                        ans.add(Arrays.asList(nums[i], nums[j], nums[l], nums[r]));
+                        l++;
+                        r--;
+                        while (l < r && nums[l] == nums[l - 1]) l++;
+                        while (l < r && nums[r] == nums[r + 1]) r--;
+                    } else if (sum < target) l++;
+                    else r--;
                 }
             }
         }
-        return quadruplets;
+        return ans;
     }
 
     public static void main(String[] args) {
-        System.out.println(fourSum(new int[] {-3, -2, -1, 0, 0, 1, 2, 3}, 0));
+        System.out.println(fourSum(new int[] {1000000000, 1000000000, 1000000000, 1000000000}, -294967296));
     }
 }

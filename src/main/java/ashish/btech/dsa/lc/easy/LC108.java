@@ -1,26 +1,9 @@
 package ashish.btech.dsa.lc.easy;
 
 import java.util.Arrays;
+import ashish.btech.dsa.structures.TreeNode;
 
 public class LC108 {
-
-    public class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode() {}
-
-        TreeNode(int val) {
-            this.val = val;
-        }
-
-        TreeNode(int val, TreeNode left, TreeNode right) {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
 
     public TreeNode sortedArrayToBST(int[] nums) {
         if (nums.length == 0) return null;
