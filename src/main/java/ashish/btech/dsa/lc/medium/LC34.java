@@ -9,9 +9,4 @@ public class LC34 {
         }
         return -1;
     }
-
-    public static void main(String[] args) {
-        LC34 blah = new LC34();
-        System.out.println();
-    }
 }
