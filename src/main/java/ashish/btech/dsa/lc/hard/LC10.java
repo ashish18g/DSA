@@ -1,4 +1,4 @@
-package ashish.btech.dsa.lc;
+package ashish.btech.dsa.lc.hard;
 
 public class LC10 {
     class Solution {
